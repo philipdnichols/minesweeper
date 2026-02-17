@@ -1,0 +1,12 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.panel {
+  background-color: #c0c0c0;
+  border: 4px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 8px;
+}

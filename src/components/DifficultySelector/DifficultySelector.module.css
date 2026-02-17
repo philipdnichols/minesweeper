@@ -1,0 +1,21 @@
+.selector {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.button {
+  background-color: #c0c0c0;
+  border: 3px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+}
+
+.button:active,
+.active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  background-color: #bdbdbd;
+}

@@ -1,0 +1,44 @@
+.cell {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+.hidden {
+  background-color: #c0c0c0;
+  border: 3px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+}
+
+.hidden:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  background-color: #bdbdbd;
+}
+
+.flagged {
+  background-color: #c0c0c0;
+  border: 3px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  cursor: default;
+}
+
+.revealed {
+  background-color: #bdbdbd;
+  border: 1px solid #808080;
+  cursor: default;
+}
+
+.mine {
+  background-color: #ff0000;
+}
