@@ -17,6 +17,9 @@ coverage
 playwright-report
 test-results
 
+# Solver screenshots
+game-screenshots
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
