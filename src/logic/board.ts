@@ -15,7 +15,12 @@ export function createEmptyBoard(difficulty: Difficulty): Board {
   return cells;
 }
 
-export function getNeighbors(board: Board, difficulty: Difficulty, row: number, col: number): Cell[] {
+export function getNeighbors(
+  board: Board,
+  difficulty: Difficulty,
+  row: number,
+  col: number,
+): Cell[] {
   const { rows, cols } = difficulty;
   const neighbors: Cell[] = [];
   for (let dr = -1; dr <= 1; dr++) {

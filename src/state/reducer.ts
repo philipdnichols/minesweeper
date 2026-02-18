@@ -60,7 +60,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     }
 
     case 'FLAG_CELL': {
-      if (state.status === 'idle' || state.status === 'won' || state.status === 'lost') return state;
+      if (state.status === 'idle' || state.status === 'won' || state.status === 'lost')
+        return state;
 
       const { row, col } = action.payload;
       const [board, delta] = toggleFlag(state.board, state.difficulty.cols, row, col);

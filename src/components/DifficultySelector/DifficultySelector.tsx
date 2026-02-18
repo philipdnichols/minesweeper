@@ -10,7 +10,7 @@ interface DifficultySelectorProps {
 export function DifficultySelector({ currentKey, onSelect }: DifficultySelectorProps) {
   return (
     <div className={styles.selector}>
-      {(Object.values(DIFFICULTIES)).map((d) => (
+      {Object.values(DIFFICULTIES).map((d) => (
         <button
           key={d.key}
           className={`${styles.button} ${d.key === currentKey ? styles.active : ''}`}

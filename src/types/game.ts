@@ -21,9 +21,9 @@ export interface Difficulty {
 }
 
 export const DIFFICULTIES: Record<DifficultyKey, Difficulty> = {
-  beginner:     { key: 'beginner',     label: 'Beginner',     rows: 9,  cols: 9,  mines: 10 },
+  beginner: { key: 'beginner', label: 'Beginner', rows: 9, cols: 9, mines: 10 },
   intermediate: { key: 'intermediate', label: 'Intermediate', rows: 16, cols: 16, mines: 40 },
-  expert:       { key: 'expert',       label: 'Expert',       rows: 16, cols: 30, mines: 99 },
+  expert: { key: 'expert', label: 'Expert', rows: 16, cols: 30, mines: 99 },
 };
 
 export type GameStatus = 'idle' | 'playing' | 'won' | 'lost';

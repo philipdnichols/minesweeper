@@ -27,12 +27,7 @@ export function Game({ state, dispatch }: GameProps) {
           status={status}
           onReset={() => dispatch({ type: 'RESET_GAME' })}
         />
-        <Board
-          board={board}
-          difficulty={difficulty}
-          status={status}
-          dispatch={dispatch}
-        />
+        <Board board={board} difficulty={difficulty} status={status} dispatch={dispatch} />
       </div>
     </div>
   );
