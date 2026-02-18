@@ -32,9 +32,9 @@ function neighbours(board, rows, cols, r, c) {
   for (let dr = -1; dr <= 1; dr++)
     for (let dc = -1; dc <= 1; dc++) {
       if (dr === 0 && dc === 0) continue;
-      const nr = r + dr, nc = c + dc;
-      if (nr >= 0 && nr < rows && nc >= 0 && nc < cols)
-        ns.push(board[idx(cols, nr, nc)]);
+      const nr = r + dr,
+        nc = c + dc;
+      if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) ns.push(board[idx(cols, nr, nc)]);
     }
   return ns;
 }
@@ -70,8 +70,20 @@ function solve(board, rows, cols) {
         if (!a.cells.every((k) => b.cells.includes(k))) continue; // a ⊄ b
         const diff = b.cells.filter((k) => !aSet.has(k));
         const diffCount = b.count - a.count;
-        if (diffCount === 0) diff.forEach((k) => { if (!safe.has(k)) { safe.add(k); changed = true; } });
-        else if (diffCount === diff.length) diff.forEach((k) => { if (!mines.has(k)) { mines.add(k); changed = true; } });
+        if (diffCount === 0)
+          diff.forEach((k) => {
+            if (!safe.has(k)) {
+              safe.add(k);
+              changed = true;
+            }
+          });
+        else if (diffCount === diff.length)
+          diff.forEach((k) => {
+            if (!mines.has(k)) {
+              mines.add(k);
+              changed = true;
+            }
+          });
       }
     }
   }
@@ -82,13 +94,18 @@ function solve(board, rows, cols) {
 // Pick the hidden cell with the most revealed neighbours (border cell with
 // maximum available information → statistically safest guess).
 function bestGuess(board, rows, cols) {
-  let best = null, bestScore = -Infinity;
+  let best = null,
+    bestScore = -Infinity;
   for (const cell of board) {
     if (cell.state !== 'hidden') continue;
     const ns = neighbours(board, rows, cols, cell.row, cell.col);
-    const score = ns.filter((n) => n.state === 'revealed').length
-                - ns.filter((n) => n.state === 'flagged').length * 2;
-    if (score > bestScore) { bestScore = score; best = cell; }
+    const score =
+      ns.filter((n) => n.state === 'revealed').length -
+      ns.filter((n) => n.state === 'flagged').length * 2;
+    if (score > bestScore) {
+      bestScore = score;
+      best = cell;
+    }
   }
   return best;
 }
@@ -99,8 +116,8 @@ async function main() {
   mkdirSync(SHOTS, { recursive: true });
 
   const DIFFICULTY = process.env.DIFFICULTY ?? 'beginner';
-  const centres    = { beginner: [4, 4], intermediate: [8, 8], expert: [8, 15] };
-  const viewports  = { beginner: [680, 540], intermediate: [780, 780], expert: [1200, 780] };
+  const centres = { beginner: [4, 4], intermediate: [8, 8], expert: [8, 15] };
+  const viewports = { beginner: [680, 540], intermediate: [780, 780], expert: [1200, 780] };
   const [startR, startC] = centres[DIFFICULTY] ?? [4, 4];
   const [vpW, vpH] = viewports[DIFFICULTY] ?? [680, 540];
 
@@ -128,10 +145,7 @@ async function main() {
   if (DIFFICULTY !== 'beginner') {
     const label = DIFFICULTY[0].toUpperCase() + DIFFICULTY.slice(1);
     await page.getByRole('button', { name: label }).click();
-    await page.waitForFunction(
-      (d) => window.__gameState?.difficulty?.key === d,
-      DIFFICULTY,
-    );
+    await page.waitForFunction((d) => window.__gameState?.difficulty?.key === d, DIFFICULTY);
   }
   await snap('initial');
 
@@ -148,7 +162,10 @@ async function main() {
     const s = await state();
     if (!s || s.status !== 'playing') break;
 
-    const { board, difficulty: { rows, cols } } = s;
+    const {
+      board,
+      difficulty: { rows, cols },
+    } = s;
     const { safe, mines } = solve(board, rows, cols);
 
     // 1. Flag mines
@@ -204,4 +221,7 @@ async function main() {
   console.log(JSON.stringify({ result: final?.status, moves, guesses, shots }, null, 2));
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
