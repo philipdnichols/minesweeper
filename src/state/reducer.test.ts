@@ -145,16 +145,20 @@ describe('FLAG_CELL', () => {
   it('decrements minesRemaining when flagging a hidden cell', () => {
     let state = dispatch(initialState, { type: 'REVEAL_CELL', payload: { row: 4, col: 4 } });
     const before = state.minesRemaining;
-    // Flag a hidden cell (not the clicked one which is now revealed)
-    state = dispatch(state, { type: 'FLAG_CELL', payload: { row: 0, col: 0 } });
+    // Find a hidden cell — flood-fill from (4,4) may reveal arbitrary cells so don't hardcode
+    const hidden = state.board.find((c) => c.state === 'hidden');
+    if (!hidden) throw new Error('No hidden cells found');
+    state = dispatch(state, { type: 'FLAG_CELL', payload: { row: hidden.row, col: hidden.col } });
     expect(state.minesRemaining).toBe(before - 1);
   });
 
   it('increments minesRemaining when unflagging', () => {
     let state = dispatch(initialState, { type: 'REVEAL_CELL', payload: { row: 4, col: 4 } });
-    state = dispatch(state, { type: 'FLAG_CELL', payload: { row: 0, col: 0 } });
+    const hidden = state.board.find((c) => c.state === 'hidden');
+    if (!hidden) throw new Error('No hidden cells found');
+    state = dispatch(state, { type: 'FLAG_CELL', payload: { row: hidden.row, col: hidden.col } });
     const before = state.minesRemaining;
-    state = dispatch(state, { type: 'FLAG_CELL', payload: { row: 0, col: 0 } });
+    state = dispatch(state, { type: 'FLAG_CELL', payload: { row: hidden.row, col: hidden.col } });
     expect(state.minesRemaining).toBe(before + 1);
   });
 });
